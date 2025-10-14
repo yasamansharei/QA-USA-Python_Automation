@@ -130,18 +130,24 @@ class UrbanRoutesPage:
         def get_payment_method(self):
             return self.driver.find_element(*self.PAYMENT_METHOD_TEXT).text
 
+
+        # Comment
         def enter_comment(self, comment):
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.COMMENT_LOCATOR)).send_keys(comment)
 
         def get_comment_text(self):
             return self.driver.find_element(*self.COMMENT_LOCATOR).get_attribute("value")
 
+
+        #Blanket
         def choose_blanket_and_handkerchiefs(self):
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.BLANKET_LOCATOR)).click()
 
         def is_blanket_selected(self):
             return self.driver.find_element(*self.BLANKET_CHECKED_LOCATOR).get_attribute("checked")
 
+
+        #Icecream
         def click_icecream(self):
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ICECREAM_ADD_LOCATOR)).click()
 
@@ -149,6 +155,7 @@ class UrbanRoutesPage:
             return self.driver.find_element(*self.  ICECREAM_NUMBER_CHECK).text
 
 
+        # Order a Taxi
         def choose_order_a_taxi(self):
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ORDER_A_TAXI_LOCATOR)).click()
 
@@ -159,12 +166,13 @@ class UrbanRoutesPage:
             self.enter_from_location(from_text)
             self.enter_to_location(to_text)
 
+        # Method Phone Number
         def fill_phone_number(self, phone_number):
             self.click_phone_number()
             self.enter_phone_number(phone_number)
             self.click_next_phone_number()
 
-
+        # Method Payment
         def fill_payment_method(self, card_number, cvv_code):
             self.click_payment_method()
             self.click_add_a_card()
