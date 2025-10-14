@@ -22,15 +22,16 @@ class UrbanRoutesPage:
         SUPPORTIVE_ACTIVE_LOCATOR = (By.XPATH,"//div[contains(@class,'tcard') and contains(@class,'active')][.//div[text()='Supportive']]")
 
         # Phone flow
-        PHONE_NUMBER_LOCATOR = (By.XPATH, "//div[@class='np-button']//div[text()='Phone number']")
-        PHONE_NUMBER_ENTER_LOCATOR = (By.ID, 'phone')
+        PHONE_NUMBER_LOCATOR = (By.CSS_SELECTOR, ".np-button")
+        PHONE_NUMBER_ENTER_LOCATOR = (By.ID, "phone")
         PHONE_NUMBER_NEXT_LOCATOR = (By.XPATH, '//button[text()="Next"]')
         PHONE_CODE_LOCATOR = (By.ID, 'code')
-        CONFIRM_BUTTON = (By.XPATH, "//button[contains(normalize-space(.), 'Confirm')]")
+        CONFIRM_BUTTON_LOCATOR = (By.XPATH, "//button[contains(normalize-space(.), 'Confirm')]")
+        SMS_INPUT_LOCATOR = (By.ID, "code")
 
         # Payment / card flow
-        PAYMENT_METHOD_LOCATOR = (By.XPATH,"//div[contains(@class,'pp-button') and .//div[normalize-space(text())='Payment method']]")
-        ADD_A_CARD_LOCATOR = (By.XPATH, '//div[text()="Add card"]')
+        PAYMENT_METHOD_LOCATOR =(By.CSS_SELECTOR, '.pp-button')
+        ADD_A_CARD_LOCATOR = (By.CSS_SELECTOR, '.pp-plus')
         CARD_NUMBER_LOCATOR = (By.ID, 'number')
         CVV_CODE_LOCATOR = (By.XPATH, '//*[@id="code" and @class="card-input"]')
         LINK_BUTTON_LOCATOR = (By.XPATH, '//button[text()="Link"]')
@@ -96,59 +97,60 @@ class UrbanRoutesPage:
             WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(self.PHONE_NUMBER_NEXT_LOCATOR)).click()
 
         def enter_sms_code(self, code):
-            el = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.PHONE_CODE_LOCATOR))
-            el.send_keys(code)
+            WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.SMS_INPUT_LOCATOR)).send_keys(code)
 
         def click_confirm_phone(self):
-            confirm_button = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CONFIRM_BUTTON))
-            confirm_button.click()
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CONFIRM_BUTTON_LOCATOR)).click()
 
         def wait_for_sms_code(self) -> str:
             code = helpers.retrieve_phone_code(self.driver)
             return code
+
+        def get_phone_number(self):
+            return self.driver.find_element(*self.PHONE_NUMBER_LOCATOR).text
 
         # Payment
         def click_payment_method(self):
             self.driver.find_element(*self.PAYMENT_METHOD_LOCATOR).click()
 
         def click_add_a_card(self):
-            self.driver.find_element(*self.ADD_A_CARD_LOCATOR).click()
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ADD_A_CARD_LOCATOR)).click()
 
         def enter_card_number(self, card_number):
-            self.driver.find_element(*self.CARD_NUMBER_LOCATOR).send_keys(card_number)
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CARD_NUMBER_LOCATOR)).send_keys(card_number)
 
         def enter_cvv_code(self, cvv_code):
-                self.driver.find_element(*self.CVV_CODE_LOCATOR).send_keys(cvv_code)
+             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CVV_CODE_LOCATOR)).send_keys(cvv_code)
 
         def click_link_button(self):
-            self.driver.find_element(*self.CVV_CODE_LOCATOR).send_keys(Keys.TAB)
-            self.driver.find_element(*self.LINK_BUTTON_LOCATOR).click()
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CVV_CODE_LOCATOR)).send_keys(Keys.TAB)
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.LINK_BUTTON_LOCATOR)).click()
 
 
         def get_payment_method(self):
             return self.driver.find_element(*self.PAYMENT_METHOD_TEXT).text
 
         def enter_comment(self, comment):
-            self.driver.find_element(*self.COMMENT_LOCATOR).send_keys(comment)
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.COMMENT_LOCATOR)).send_keys(comment)
 
         def get_comment_text(self):
             return self.driver.find_element(*self.COMMENT_LOCATOR).get_attribute("value")
 
         def choose_blanket_and_handkerchiefs(self):
-            self.driver.find_element(*self.BLANKET_LOCATOR).click()
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.BLANKET_LOCATOR)).click()
 
         def is_blanket_selected(self):
             return self.driver.find_element(*self.BLANKET_CHECKED_LOCATOR).get_attribute("checked")
 
         def click_icecream(self):
-            self.driver.find_element(*self.ICECREAM_ADD_LOCATOR).click()
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ICECREAM_ADD_LOCATOR)).click()
 
         def check_icecream(self):
             return self.driver.find_element(*self.  ICECREAM_NUMBER_CHECK).text
 
 
         def choose_order_a_taxi(self):
-            self.driver.find_element(*self.ORDER_A_TAXI_LOCATOR).click()
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ORDER_A_TAXI_LOCATOR)).click()
 
         def is_car_search_shown(self):
             self.driver.find_element(*self.CAR_SEARCH_LOCATOR).is_displayed()
@@ -161,6 +163,7 @@ class UrbanRoutesPage:
             self.click_phone_number()
             self.enter_phone_number(phone_number)
             self.click_next_phone_number()
+
 
         def fill_payment_method(self, card_number, cvv_code):
             self.click_payment_method()

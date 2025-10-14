@@ -3,7 +3,7 @@ import data
 import helpers
 import time
 from pages import UrbanRoutesPage
-BASE_URL = "https://cnt-f8358816-ed11-44f2-9efb-fb808816b81a.containerhub.tripleten-services.com/"
+BASE_URL = "https://cnt-35c86278-39fe-43c5-91d3-d3c5c5522c39.containerhub.tripleten-services.com/"
 
 class TestUrbanRoutes:
     @classmethod
@@ -26,7 +26,7 @@ class TestUrbanRoutes:
         # Add in S8: Implement the steps for setting a route
         self.driver.get(BASE_URL)
         urban_routes_page = UrbanRoutesPage(self.driver)
-        urban_routes_page.enter_locations('East 2nd Street, 601', '1300 1st St')
+        urban_routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         from_value = urban_routes_page.get_from_location()
         to_value = urban_routes_page.get_to_location()
         expected_value_from= "East 2nd Street, 601"
@@ -40,7 +40,7 @@ class TestUrbanRoutes:
         # Add in S8: Implement the steps for selecting a plan
         self.driver.get(BASE_URL)
         urban_routes_page = UrbanRoutesPage(self.driver)
-        urban_routes_page.enter_locations('East 2nd Street, 601', '1300 1st St')
+        urban_routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         time.sleep(2)
         urban_routes_page.click_call_a_taxi()
         time.sleep(2)
@@ -56,26 +56,27 @@ class TestUrbanRoutes:
         # Add in S8: Implement the steps for filling in a phone number
         self.driver.get(BASE_URL)
         urban_routes_page = UrbanRoutesPage(self.driver)
-        urban_routes_page.enter_locations('East 2nd Street, 601', '1300 1st St')
-        time.sleep(2)
+        urban_routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         urban_routes_page.click_call_a_taxi()
-        time.sleep(2)
         urban_routes_page.click_supportive()
+        urban_routes_page.fill_phone_number(data.PHONE_NUMBER)
+        code = urban_routes_page.wait_for_sms_code()
         time.sleep(2)
-        urban_routes_page.fill_phone_number("+1 310 922 9411")
-        expected_phone = "+1 310 922 9411"
-        actual_phone = urban_routes_page.fill_phone_number("+1 310 922 9411")
-        print("Function created for fill_phone_number")
-        pass
+        urban_routes_page.enter_sms_code(code)
+        urban_routes_page.click_confirm_phone()
+        actual_phone = urban_routes_page.get_phone_number()
+        assert data.PHONE_NUMBER == actual_phone, f"Expected '{data.PHONE_NUMBER}', got '{actual_phone}'"
+    print("Function created for fill_phone_number")
+
 
     def test_fill_card(self):
         # Add in S8: Implement the steps for filling in a card
         self.driver.get(BASE_URL)
         urban_routes_page = UrbanRoutesPage(self.driver)
-        urban_routes_page.enter_locations('East 2nd Street, 601', '1300 1st St')
+        urban_routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         urban_routes_page.click_call_a_taxi()
         urban_routes_page.click_supportive()
-        urban_routes_page.fill_payment_method("1234 0000 4321", "12")
+        urban_routes_page.fill_payment_method(data.CARD_NUMBER, data.CARD_CODE)
         actual_value = urban_routes_page.get_payment_method()
         assert "Card" in actual_value, f"Expected 'Card', got '{actual_value}'"
         print("function created for fill card")
@@ -85,12 +86,9 @@ class TestUrbanRoutes:
         # Add in S8: Implement the steps for adding a comment for the driver
         self.driver.get(BASE_URL)
         urban_routes_page = UrbanRoutesPage(self.driver)
-        urban_routes_page.enter_locations('East 2nd Street, 601', '1300 1st St')
-        time.sleep(2)
+        urban_routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         urban_routes_page.click_call_a_taxi()
-        time.sleep(2)
         urban_routes_page.click_supportive()
-        time.sleep(2)
         urban_routes_page.enter_comment(data.MESSAGE_FOR_DRIVER)
         actual_comment = urban_routes_page.get_comment_text()
         assert data.MESSAGE_FOR_DRIVER == actual_comment, f"Expected '{data.MESSAGE_FOR_DRIVER}', got '{actual_comment}'"
@@ -101,12 +99,9 @@ class TestUrbanRoutes:
         # Add in S8: Implement the steps for ordering blanket and handkerchiefs
         self.driver.get(BASE_URL)
         urban_routes_page = UrbanRoutesPage(self.driver)
-        urban_routes_page.enter_locations('East 2nd Street, 601', '1300 1st St')
-        time.sleep(2)
+        urban_routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         urban_routes_page.click_call_a_taxi()
-        time.sleep(2)
         urban_routes_page.click_supportive()
-        time.sleep(2)
         urban_routes_page.choose_blanket_and_handkerchiefs()
         assert urban_routes_page.is_blanket_selected()
         print("function created for order blanket and handkerchiefs")
@@ -116,12 +111,9 @@ class TestUrbanRoutes:
         # Loop twice since the requirement is to order 2 ice creams
         self.driver.get(BASE_URL)
         urban_routes_page = UrbanRoutesPage(self.driver)
-        urban_routes_page.enter_locations('East 2nd Street, 601', '1300 1st St')
-        time.sleep(2)
+        urban_routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         urban_routes_page.click_call_a_taxi()
-        time.sleep(2)
         urban_routes_page.click_supportive()
-        time.sleep(2)
         int(urban_routes_page.check_icecream())
         for _ in range(2):
             urban_routes_page.click_icecream()
@@ -135,14 +127,10 @@ class TestUrbanRoutes:
         # Add in S8: Implement the steps for verifying car search model appears
         self.driver.get(BASE_URL)
         urban_routes_page = UrbanRoutesPage(self.driver)
-        urban_routes_page.enter_locations('East 2nd Street, 601', '1300 1st St')
-        time.sleep(2)
+        urban_routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         urban_routes_page.click_call_a_taxi()
-        time.sleep(2)
         urban_routes_page.click_supportive()
-        time.sleep(2)
         urban_routes_page.enter_comment(data.MESSAGE_FOR_DRIVER)
-        time.sleep(2)
         urban_routes_page.is_car_search_shown()
         print("function created for car search model")
         pass
