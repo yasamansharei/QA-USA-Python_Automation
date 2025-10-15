@@ -35,7 +35,7 @@ class UrbanRoutesPage:
         CARD_NUMBER_LOCATOR = (By.ID, 'number')
         CVV_CODE_LOCATOR = (By.XPATH, '//*[@id="code" and @class="card-input"]')
         LINK_BUTTON_LOCATOR = (By.XPATH, '//button[text()="Link"]')
-        PAYMENT_METHOD_TEXT = (By.CLASS_NAME, 'pp-value-text')
+        PAYMENT_METHOD_TEXT_LOCATOR = (By.CLASS_NAME, 'pp-value-text')
 
 
         # Driver comment
@@ -49,7 +49,7 @@ class UrbanRoutesPage:
         ICECREAM_ADD_LOCATOR = (By.XPATH, '//div[text()="+"]')
         ORDER_A_TAXI_LOCATOR = (By.XPATH, '//button[.//span[text()="Enter the number and order"]]')
         CAR_SEARCH_LOCATOR = (By.XPATH, '//div[@class = "order-body"]')
-        ICECREAM_NUMBER_CHECK = (By.XPATH, "//div[contains(@class,'counter-container')][.//div[normalize-space(text())='Ice cream']]//div[contains(@class,'counter-value')]")
+        ICECREAM_NUMBER_CHECK_LOCATOR = (By.XPATH, "//div[contains(@class,'counter-container')][.//div[normalize-space(text())='Ice cream']]//div[contains(@class,'counter-value')]")
 
 
         def __init__(self, driver):
@@ -128,7 +128,7 @@ class UrbanRoutesPage:
 
 
         def get_payment_method(self):
-            return self.driver.find_element(*self.PAYMENT_METHOD_TEXT).text
+            return self.driver.find_element(*self.PAYMENT_METHOD_TEXT_LOCATOR).text
 
 
         # Comment
@@ -152,7 +152,7 @@ class UrbanRoutesPage:
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ICECREAM_ADD_LOCATOR)).click()
 
         def check_icecream(self):
-            return self.driver.find_element(*self.  ICECREAM_NUMBER_CHECK).text
+            return self.driver.find_element(*self.  ICECREAM_NUMBER_CHECK_LOCATOR).text
 
 
         # Order a Taxi
