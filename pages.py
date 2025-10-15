@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
-
 import helpers
 from helpers import retrieve_phone_code
 
@@ -37,7 +36,6 @@ class UrbanRoutesPage:
         LINK_BUTTON_LOCATOR = (By.XPATH, '//button[text()="Link"]')
         PAYMENT_METHOD_TEXT_LOCATOR = (By.CLASS_NAME, 'pp-value-text')
 
-
         # Driver comment
         COMMENT_LOCATOR = (By.ID, 'comment')
 
@@ -55,6 +53,7 @@ class UrbanRoutesPage:
         def __init__(self, driver):
             self.driver = driver  # Initialize the driver
 
+
         #  Route
         def enter_from_location(self, from_text):
             # Enter From
@@ -70,18 +69,20 @@ class UrbanRoutesPage:
         def get_to_location(self):
             return self.driver.find_element(*self.TO_LOCATOR).get_attribute("value")
 
+
         # Call A taxi
         def click_call_a_taxi(self):
             # Click Call a taxi
             WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.CALL_A_TAXI_LOCATOR)).click()
 
+
         #  Plan
         def click_supportive(self):
              WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(self.SUPPORTIVE_LOCATOR)).click()
 
-
         def get_supportive_option(self):
             return self.driver.find_element(*self.SUPPORTIVE_LOCATOR).text
+
 
         # Phone
         def click_phone_number(self):
@@ -109,6 +110,7 @@ class UrbanRoutesPage:
         def get_phone_number(self):
             return self.driver.find_element(*self.PHONE_NUMBER_LOCATOR).text
 
+
         # Payment
         def click_payment_method(self):
             self.driver.find_element(*self.PAYMENT_METHOD_LOCATOR).click()
@@ -125,7 +127,6 @@ class UrbanRoutesPage:
         def click_link_button(self):
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CVV_CODE_LOCATOR)).send_keys(Keys.TAB)
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.LINK_BUTTON_LOCATOR)).click()
-
 
         def get_payment_method(self):
             return self.driver.find_element(*self.PAYMENT_METHOD_TEXT_LOCATOR).text
@@ -166,11 +167,13 @@ class UrbanRoutesPage:
             self.enter_from_location(from_text)
             self.enter_to_location(to_text)
 
+
         # Method Phone Number
         def fill_phone_number(self, phone_number):
             self.click_phone_number()
             self.enter_phone_number(phone_number)
             self.click_next_phone_number()
+
 
         # Method Payment
         def fill_payment_method(self, card_number, cvv_code):

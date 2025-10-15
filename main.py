@@ -21,6 +21,7 @@ class TestUrbanRoutes:
         else:
             print("Cannot connect to Urban Routes. Check the server is on and still running")
 
+
     def test_set_route(self):
         # Add in S8: Implement the steps for setting a route
         self.driver.get(data.URBAN_ROUTES_URL)
@@ -124,6 +125,6 @@ class TestUrbanRoutes:
 
 
 
-@classmethod
-def teardown_class(cls):
-    cls.driver.quit()
+    @classmethod
+    def teardown_class(cls):
+        cls.driver.quit()
