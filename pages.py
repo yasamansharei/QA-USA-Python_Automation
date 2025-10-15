@@ -73,7 +73,7 @@ class UrbanRoutesPage:
             WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.CALL_A_TAXI_LOCATOR)).click()
 
 
-        #  Plan
+        # Plan
         def click_supportive(self):
              WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(self.SUPPORTIVE_LOCATOR)).click()
 
@@ -137,7 +137,7 @@ class UrbanRoutesPage:
             return self.driver.find_element(*self.COMMENT_LOCATOR).get_attribute("value")
 
 
-        #Blanket
+        # Blanket
         def choose_blanket_and_handkerchiefs(self):
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.BLANKET_LOCATOR)).click()
 
@@ -145,7 +145,7 @@ class UrbanRoutesPage:
             return self.driver.find_element(*self.BLANKET_CHECKED_LOCATOR).get_attribute("checked")
 
 
-        #Icecream
+        # Icecream
         def click_icecream(self):
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ICECREAM_ADD_LOCATOR)).click()
 
