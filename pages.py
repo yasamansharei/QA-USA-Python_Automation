@@ -49,21 +49,19 @@ class UrbanRoutesPage:
         CAR_SEARCH_LOCATOR = (By.XPATH, '//div[@class = "order-body"]')
         ICECREAM_NUMBER_CHECK_LOCATOR = (By.XPATH, "//div[contains(@class,'counter-container')][.//div[normalize-space(text())='Ice cream']]//div[contains(@class,'counter-value')]")
 
-
+        # Initialize
         def __init__(self, driver):
             self.driver = driver  # Initialize the driver
 
 
-        #  Route
+        # Route
         def enter_from_location(self, from_text):
-            # Enter From
             WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.FROM_LOCATOR)).send_keys(from_text)
 
         def get_from_location(self):
             return self.driver.find_element(*self.FROM_LOCATOR).get_attribute("value")
 
         def enter_to_location(self, to_text):
-            # Enter To
             WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.TO_LOCATOR)).send_keys(to_text)
 
         def get_to_location(self):
@@ -72,7 +70,6 @@ class UrbanRoutesPage:
 
         # Call A taxi
         def click_call_a_taxi(self):
-            # Click Call a taxi
             WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.CALL_A_TAXI_LOCATOR)).click()
 
 
