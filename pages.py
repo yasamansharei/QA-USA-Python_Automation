@@ -113,7 +113,7 @@ class UrbanRoutesPage:
             self.driver.find_element(*self.PAYMENT_METHOD_LOCATOR).click()
 
         def click_add_a_card(self):
-            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ADD_A_CARD_LOCATOR)).click()
+           self.driver.find_element(*self.ADD_A_CARD_LOCATOR).click()
 
         def enter_card_number(self, card_number):
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CARD_NUMBER_LOCATOR)).send_keys(card_number)
