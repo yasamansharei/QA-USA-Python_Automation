@@ -158,7 +158,7 @@ class UrbanRoutesPage:
             WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ORDER_A_TAXI_LOCATOR)).click()
 
         def is_car_search_shown(self):
-            self.driver.find_element(*self.CAR_SEARCH_LOCATOR).is_displayed()
+            return self.driver.find_element(*self.CAR_SEARCH_LOCATOR).is_displayed()
 
         def enter_locations(self, from_text, to_text):
             self.enter_from_location(from_text)
@@ -175,6 +175,7 @@ class UrbanRoutesPage:
         # Method Payment
         def fill_payment_method(self, card_number, cvv_code):
             self.click_payment_method()
+            WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(self.ADD_A_CARD_LOCATOR))
             self.click_add_a_card()
             self.enter_card_number(card_number)
             self.enter_cvv_code(cvv_code)

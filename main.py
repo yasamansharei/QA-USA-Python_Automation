@@ -29,8 +29,8 @@ class TestUrbanRoutes:
         urban_routes_page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
         from_value = urban_routes_page.get_from_location()
         to_value = urban_routes_page.get_to_location()
-        expected_value_from= "East 2nd Street, 601"
-        expected_value_to = "1300 1st St"
+        expected_value_from= data.ADDRESS_FROM
+        expected_value_to = data.ADDRESS_TO
         assert from_value == expected_value_from
         assert to_value == expected_value_to
 
@@ -120,8 +120,8 @@ class TestUrbanRoutes:
         urban_routes_page.click_call_a_taxi()
         urban_routes_page.click_supportive()
         urban_routes_page.enter_comment(data.MESSAGE_FOR_DRIVER)
-        urban_routes_page.is_car_search_shown()
-
+        urban_routes_page.choose_order_a_taxi()
+        assert urban_routes_page.is_car_search_shown()
 
 
 
